@@ -1,9 +1,9 @@
 //
 //  AppDelegate.swift
-//  DDKit
+//  DDKitDdemo
 //
-//  Created by asashin227 on 06/30/2017.
-//  Copyright (c) 2017 asashin227. All rights reserved.
+//  Created by Asakura Shinsuke on 2017/06/14.
+//  Copyright © 2017年 Asakura Shinsuke. All rights reserved.
 //
 
 import UIKit
@@ -16,12 +16,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        // Clash handler
+        NSSetUncaughtExceptionHandler { exception in
+            print("Exception message : " + exception.reason!)
+            exception.callStackSymbols.forEach {
+                print($0)
+            }
+        }
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window?.makeKeyAndVisible()
+        
+        let navi = UINavigationController.init(rootViewController: ViewController())
+        navi.pushViewController(ViewController(), animated: false)
+        window?.rootViewController = navi
+        
         return true
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-        // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+        // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
@@ -30,7 +44,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
-        // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+        // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
